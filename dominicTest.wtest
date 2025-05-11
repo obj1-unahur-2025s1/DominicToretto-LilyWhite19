@@ -1,0 +1,59 @@
+import dominic.*
+
+describe "test de los autos de dominic torreto" {
+
+    method initialize(){
+        dominic.comprar(ferrari)
+        dominic.comprar(intocable)
+        dominic.comprar(inventado)
+        dominic.comprar(flechaRubi)
+        flechaRubi.reparar()
+        flechaRubi.reparar()
+    }
+  test "los todos los autos estan en condicione para correr" {
+    assert.equals([], dominic.autosNoEnCondiciones())
+  }
+
+  test "dominic hace una prueba con todos sus autos y el ferrari, y el intocable ya no son aptos para correr"{
+    dominic.pruebasDeVelocidad()
+    assert.equals([ferrari, intocable], dominic.autosNoEnCondiciones())
+  }
+  test "el ferrari y el intocable se reparan"{
+    dominic.pruebasDeVelocidad()
+    dominic.mandarAutosAlTaller()
+    dominic.trabajarEnElTaller()
+    assert.equals([ferrari, intocable, inventado, flechaRubi], dominic.autosEnCondiciones())
+  }
+  test "la temporada se acabo y dominic vende todos sus autos"{
+    dominic.venderAutos()
+    assert.equals([], dominic.autos())
+  }
+
+  test "el promedio de los autos de dominic es de 278,75"{
+    assert.equals(278.75, dominic.promedioVelocidades())
+  }
+
+  test "el auto mas rapido en condiciones de dominic es la flecha rubi"{
+    assert.equals(flechaRubi, dominic.autoMasRapidoEnCondiciones())
+  }
+  test "el flecha rubi es mas rapido que el doble del promedio entre todos los autos"{
+    assert.that(dominic.hayUnAutoMuyRapido())
+  }
+  test "dominic hace pruebas con el ferrari y tiene que mandarlo al taller"{
+    ferrari.hacerPrueba()
+    dominic.mandarAutosAlTaller()
+    assert.equals([ferrari], taller.autosAReparar())
+  }
+  test "reparan a la flecha rubi pero cambia de color no esta apto para correr"{
+    flechaRubi.reparar()
+    assert.notThat(flechaRubi.estaEnCondiciones())
+  }
+  test "dominic toca al intocable y ya no esta en condiciones"{
+    intocable.hacerPrueba()
+    assert.notThat(intocable.estaEnCondiciones())
+  }
+  test "cambian de copiloto en el inventado y ahora ya no esta en condiciones"{
+    inventado.copiloto(leo)
+    assert.notThat(inventado.estaEnCondiciones())
+  }
+}
